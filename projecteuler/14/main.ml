@@ -1,17 +1,32 @@
 open Int64;;
 open Printf;;
+open Hashtbl;;
+
+let mem = Hashtbl.create 10000;;
 
 let rec collatzLen n =
-  if n < 0L then
-    Printf.printf "%Ld\n" n;
-
-  if n = 1L then
-    1
+  if Hashtbl.mem mem n then
+    Hashtbl.find mem n
   else begin
-    if (Int64.rem n 2L) = 0L then
-      1 + (collatzLen (Int64.div n 2L))
-    else
-      1 + (collatzLen (Int64.add (Int64.mul 3L n) 1L))
+    if n < 0L then
+      Printf.printf "%Ld\n" n;
+
+    if n = 1L then
+      1
+    else begin
+      if (Int64.rem n 2L) = 0L then begin
+        let ans = 1 + (collatzLen (Int64.div n 2L))
+        in
+          Hashtbl.add mem n ans;
+          ans
+      end
+      else begin
+        let ans = 1 + (collatzLen (Int64.add (Int64.mul 3L n) 1L))
+        in
+          Hashtbl.add mem n ans;
+          ans
+      end
+    end
   end
 ;;
 
