@@ -19,8 +19,10 @@ let rec findPairs n total =
   else begin
     let d = sumFactors n 1 0
     in
-      if d < 10000 && (sumFactors d 1 0) = n then
+      if d < 10000 && d != n && (sumFactors d 1 0) = n then begin
+        Printf.printf "%d %d\n" n d;
         findPairs (n + 1) (total + n)
+      end
       else
         findPairs (n + 1) total
   end
