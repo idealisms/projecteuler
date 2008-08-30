@@ -1,4 +1,4 @@
-(* ocaml str.cma main.ml *)
+#load "str.cma";;
 
 open Hashtbl;;
 open List;;
